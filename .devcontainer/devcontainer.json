@@ -1,0 +1,72 @@
+{
+  "name": "latex",
+  "image": "ghcr.io/jannismoeller/latex-codespaces-container:latest",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "James-Yu.latex-workshop",
+        "GitHub.copilot",
+        // "ms-vsliveshare.vsliveshare", // enable if you use LiveShare for collaboration
+      ],
+      "settings": {
+        // "latex-workshop.view.pdf.color.dark.pageColorsBackground": "#171717", // For Dark Viewwer
+        // "latex-workshop.view.pdf.color.dark.pageColorsForeground": "#FFFFFF", // For Dark Viewer
+        // "latex-workshop.view.pdf.color.dark.backgroundColor": "#171717", // For Dark Viewer
+        "editor.formatOnSave": false,
+
+        "latex-workshop.linting.run": "onType",
+        "latex-workshop.linting.delay": 750,
+        "latex-workshop.linting.chktex.enabled": true,
+
+        "latex-workshop.latex.autoBuild.run": "onSave",
+        "latex-workshop.latex.outDir": "./PDF",
+        "latex-workshop.latex.magic.args": [
+            "-output-directory=PDF", // to change the output directory
+            "%DOC%"
+        ],
+        "latex-workshop.latex.recipe.default": "lastUsed",
+        "latex-workshop.latex.autoClean.run": "onBuilt",
+        "latex-workshop.latex.clean.subfolder.enabled": true,
+        "latex-workshop.latex.clean.fileTypes": [
+            "*.aux",
+            "*.bbl",
+            "*.blg",
+            "*.idx",
+            "*.ind",
+            "*.lof",
+            "*.lot",
+            "*.out",
+            "*.toc",
+            "*.acn",
+            "*.acr",
+            "*.alg",
+            "*.glg",
+            "*.glo",
+            "*.gls",
+            "*.fls",
+            "*.log",
+            "*.fdb_latexmk",
+            "*.snm",
+            "*.synctex(busy)",
+            "*.synctex.gz(busy)",
+            "*.nav",
+            "*.vrb",
+            "*.gz", // Added Manually
+            "*.bcf", // Added Manually
+            "*.nlo", // Added Manually
+            "*.run.xml" // Added Manually
+        ],
+        "latex-workshop.view.pdf.viewer": "tab",
+        
+        "[latex]": {
+            "editor.formatOnPaste": false,
+            "editor.wordWrap": "on",
+            // "editor.fontSize": 14,
+            "editor.suggestSelection": "recentlyUsedByPrefix",
+            "cSpell.showAutocompleteSuggestions": true,
+            "rewrap.autoWrap.enabled": true
+        },
+      }
+    }
+  }
+}
