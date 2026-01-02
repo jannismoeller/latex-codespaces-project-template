@@ -1,14 +1,16 @@
-\usepackage{svg}
+\documentclass{article}
+\usepackage[inkscapepath=svgsubdir]{svg}
 \begin{document}
 
 \section{Hello, World!}
 
+Here is a simple LaTeX document with an SVG image included using the \texttt{svg} package:
 % SVG test
-\begin{figure}[t]
+\begin{figure}[h]
   \centering
-  \includesvg[width=\linewidth]{images/curvature-supervision.svg}
-  \caption{Supervision of curvature improves surface quality of low curvature areas.}
-  \label{fig:curvature_supervision}
+  \includesvg[width=\linewidth]{images/sample.svg}
+  \caption{This should display an SVG image.}
+  \label{fig:svg_example}
 \end{figure}
 
 \end{document} % This is the end of the document
