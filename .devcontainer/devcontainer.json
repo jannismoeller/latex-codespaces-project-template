@@ -12,6 +12,7 @@
         // "latex-workshop.view.pdf.color.dark.pageColorsBackground": "#171717", // For Dark Viewwer
         // "latex-workshop.view.pdf.color.dark.pageColorsForeground": "#FFFFFF", // For Dark Viewer
         // "latex-workshop.view.pdf.color.dark.backgroundColor": "#171717", // For Dark Viewer
+        "workbench.tree.indent": 24,
         "editor.formatOnSave": false,
 
         "latex-workshop.linting.run": "onType",
