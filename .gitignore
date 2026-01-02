@@ -1,2 +1,13 @@
+# Latex project temporary files
+*.aux
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.synctex.gz
+*.xcp
+
 svg-inkscape/
-**synctex.gz
+comment.cut 
