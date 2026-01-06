@@ -1,0 +1,102 @@
+name: Overleaf Sync
+
+# ----------------------------------------------------------------
+# TRIGGERS
+# ----------------------------------------------------------------
+on:
+  # Manual Trigger
+  workflow_dispatch:
+
+  # --------------------------------------------------------------
+  # AUTO SYNC (ENABLE IF DESIRED)
+  # --------------------------------------------------------------
+  # # Scheduled Backup (Every 10 minutes)
+  # schedule:
+  #   - cron: '*/10 * * * *'
+  # # Instant Sync (On push to GitHub)
+  # push:
+  #   branches:
+  #     - master
+
+# ----------------------------------------------------------------
+# PERMISSIONS (NEW)
+# ----------------------------------------------------------------
+# Grants the GITHUB_TOKEN permission to push changes to the repo.
+permissions:
+  contents: write
+
+# ----------------------------------------------------------------
+# CONCURRENCY GROUP
+# ----------------------------------------------------------------
+# Prevents multiple sync jobs from running simultaneously.
+# 'cancel-in-progress: false' ensures a running job finishes safely.
+# If a new job is triggered while one is running, it queues up.
+# Intermediate queued jobs are automatically coalesced (skipped).
+concurrency: 
+  group: overleaf-sync
+  cancel-in-progress: false
+
+# ----------------------------------------------------------------
+# JOBS
+# ----------------------------------------------------------------
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout GitHub Repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # Fetch full history (required for merging)
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Configure Git User
+        run: |
+          git config user.name "Overleaf Sync Bot"
+          git config user.email "actions@github.com"
+
+      - name: Sync Logic# ----------------------------------------------------------------
+        # INSTRUCTION: SETUP SECRETS
+        # Go to GitHub Repo -> Settings -> Secrets and variables -> Actions
+        # Click "New repository secret" to add these values:
+        #
+        # 1. OVERLEAF_TOKEN: 
+        #    Generate this in Overleaf: https://www.overleaf.com/user/settings
+        #    Git Integration -> Add another token
+        #
+        # 2. OVERLEAF_PROJECT_ID:
+        #    The ID from your project URL.
+        #    Example: https://www.overleaf.com/project/65a1b2c3d4e5f6...
+        #    The ID is "65a1b2c3d4e5f6...".
+        # ----------------------------------------------------------------
+        env:
+          OVERLEAF_TOKEN: ${{ secrets.OVERLEAF_TOKEN }}
+          PROJECT_ID: ${{ secrets.OVERLEAF_PROJECT_ID }}
+        run: |
+          # 1. Setup Overleaf Remote
+          # CORRECTED: Username is always "git". Password is the Token.
+          git remote add overleaf "https://git:${OVERLEAF_TOKEN}@git.overleaf.com/${PROJECT_ID}"
+          
+          # 2. Fetch from Overleaf
+          echo "Fetching from Overleaf..."
+          git fetch overleaf
+          
+          # 3. Merge Overleaf into Local
+          echo "Merging..."
+          git merge overleaf/master --no-edit
+          
+          # 4. Push to GitHub (Only if local is ahead)
+          if [ $(git rev-list HEAD...origin/master --count) -gt 0 ]; then
+            echo "Local changes detected. Pushing to GitHub..."
+            git push origin master
+          else
+            echo "GitHub is already up to date."
+          fi
+
+          # 5. Push to Overleaf (Only if local is ahead)
+          if [ $(git rev-list HEAD...overleaf/master --count) -gt 0 ]; then
+            echo "Local changes detected. Pushing to Overleaf..."
+            git push overleaf HEAD:master
+          else
+            echo "Overleaf is already up to date."
+          fi

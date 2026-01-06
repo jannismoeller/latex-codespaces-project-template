@@ -12,6 +12,7 @@
         "James-Yu.latex-workshop",
         "GitHub.copilot",
         // "ms-vsliveshare.vsliveshare", // enable if you use LiveShare for collaboration
+        "Gruntfuggly.todo-tree"
       ],
       "settings": {
         // "latex-workshop.view.pdf.color.dark.pageColorsBackground": "#171717", // For Dark Viewwer
@@ -19,6 +20,7 @@
         // "latex-workshop.view.pdf.color.dark.backgroundColor": "#171717", // For Dark Viewer
         "workbench.tree.indent": 24,
         "editor.formatOnSave": false,
+        "git.autofetch": true,
 
         "latex-workshop.linting.run": "onType",
         "latex-workshop.linting.delay": 750,
@@ -72,6 +74,8 @@
             "cSpell.showAutocompleteSuggestions": true,
             "rewrap.autoWrap.enabled": true
         },
+
+        "todo-tree.regex.regex": "(//|#|%|<!--|;|/\\*|^|^[ \\t]*(-|\\d+.))\\s*($TAGS)"
       }
     }
   }
