@@ -1,6 +1,11 @@
 {
   "name": "latex",
   "image": "ghcr.io/jannismoeller/latex-codespaces-container:latest",
+  "features": {
+    "ghcr.io/devcontainers/features/common-utils:2": {  // container image currently does not have openssh
+        "configureZshAsDefaultShell": true  // not required, but nice to have
+    }
+  },
   "customizations": {
     "vscode": {
       "extensions": [

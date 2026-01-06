@@ -9,5 +9,8 @@
 *.synctex.gz
 *.xcp
 
+# output directory
+PDF/
+
+# Inkscape temporary files
 svg-inkscape/
-comment.cut 
